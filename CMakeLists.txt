@@ -47,7 +47,8 @@ mark_as_advanced(BUILD_TUTORIAL_DEMO_GRABBER)
 # add_definitions(${PCL_DEFINITIONS})
 
 #Eigen
-add_definitions(-Wno-deprecated -DEIGEN_DONT_VECTORIZE -DEIGEN_DISABLE_UNALIGNED_ARRAY_ASSERT)
+#add_definitions(-Wno-deprecated -DEIGEN_DONT_VECTORIZE -DEIGEN_DISABLE_UNALIGNED_ARRAY_ASSERT)
+add_definitions(-DEIGEN_DONT_VECTORIZE -DEIGEN_DISABLE_UNALIGNED_ARRAY_ASSERT)
 
 # Executable output directory
 SET(RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/build/bin${OUTPUT_DIRECTORY_POSTFIX} CACHE PATH "Executable output directory")
@@ -81,7 +82,8 @@ endif()
 #
 ###############################################################################
 
-add_library(tinyxml2 SHARED ${CMAKE_CURRENT_SOURCE_DIR}/3rdParty/tinyXML/tinyxml2.h ${CMAKE_CURRENT_SOURCE_DIR}/3rdParty/tinyXML/tinyxml2.cpp)
+#add_library(tinyxml2 SHARED ${CMAKE_CURRENT_SOURCE_DIR}/3rdParty/tinyXML/tinyxml2.h ${CMAKE_CURRENT_SOURCE_DIR}/3rdParty/tinyXML/tinyxml2.cpp)
+add_library(tinyxml2 STATIC ${CMAKE_CURRENT_SOURCE_DIR}/3rdParty/tinyXML/tinyxml2.h ${CMAKE_CURRENT_SOURCE_DIR}/3rdParty/tinyXML/tinyxml2.cpp)
 
 ###############################################################################
 #
@@ -133,8 +135,8 @@ if(BUILD_TUTORIAL AND BUILD_TUTORIAL_VISUALIZER)
         file(GLOB VISUALIZER_HEADERS
             "${CMAKE_SOURCE_DIR}/include/Visualizer/*.h"
         )
-
         ADD_LIBRARY(Visualizer STATIC ${VISUALIZER_SOURCES} ${VISUALIZER_HEADERS})
+		TARGET_LINK_LIBRARIES(Visualizer)
         INSTALL(TARGETS Visualizer RUNTIME DESTINATION bin LIBRARY DESTINATION bin ARCHIVE DESTINATION lib)
         INSTALL(FILES ${VISUALIZER_HEADERS} DESTINATION include/putslam/Visualizer/)
 endif(BUILD_TUTORIAL AND BUILD_TUTORIAL_VISUALIZER)
@@ -170,7 +172,7 @@ if(BUILD_TUTORIAL_DEMO AND BUILD_TUTORIAL_DEMO_GRABBER)
         SET(DEMO_FILES
                 ${PROJECT_ROOT}/resources/configGlobal.xml
         )
-        SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-rpath ./")
+        #SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-rpath ./")
         SET(DEMO_SOURCES ./demo_grabber.cpp)
         ADD_EXECUTABLE(Demo_grabber ${DEMO_SOURCES})
         TARGET_LINK_LIBRARIES(Demo_grabber tinyxml2 Grabber Visualizer)
