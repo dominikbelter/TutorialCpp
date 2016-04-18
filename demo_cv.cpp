@@ -29,7 +29,7 @@ int main()
         cv::imshow( "Srcimg", image );                   // Show our image inside it.
 
 
-        //cv::GaussianBlur( image, image, cv::Size( 21, 21 ), 5, 5 );
+        cv::GaussianBlur( image, image, cv::Size( 21, 21 ), 5, 5 );
         cv::namedWindow( "Gaussian Blur", cv::WINDOW_AUTOSIZE );// Create a window for display.
         cv::imshow( "Gaussian Blur", image );
 
@@ -43,13 +43,18 @@ int main()
 
         cv::Mat detectedEdges;
 
-        int lowThreshold;
+        int lowThreshold=10;
         int ratio = 3;
         int kernel_size = 3;
 
         cv::Canny( gray, detectedEdges, lowThreshold, lowThreshold*ratio, kernel_size );
         cv::namedWindow( "edges", cv::WINDOW_AUTOSIZE );// Create a window for display.
         cv::imshow( "edges", detectedEdges );                   // Show our image inside it.
+
+        cv::Mat depth;
+        depth = cv::imread("depth_00000.png", CV_LOAD_IMAGE_ANYDEPTH);   // Read the file
+        cv::namedWindow( "depth", cv::WINDOW_AUTOSIZE );// Create a window for display.
+        cv::imshow( "depth", depth );
 
         cv::waitKey(0);                                          // Wait for a keystroke in the window
     }
