@@ -31,6 +31,8 @@ option(BUILD_TUTORIAL_DEMO_BASIC "Build TUTORIAL test" YES)
 mark_as_advanced(BUILD_TUTORIAL_DEMO_BASIC)
 option(BUILD_TUTORIAL_DEMO_GRABBER "Build grabber test" YES)
 mark_as_advanced(BUILD_TUTORIAL_DEMO_GRABBER)
+option(BUILD_TUTORIAL_DEMO_OPENCV "Build opencv test" YES)
+mark_as_advanced(BUILD_TUTORIAL_DEMO_OPENCV)
 
 #additional dependencies
 # Boost
@@ -49,6 +51,10 @@ mark_as_advanced(BUILD_TUTORIAL_DEMO_GRABBER)
 #Eigen
 #add_definitions(-Wno-deprecated -DEIGEN_DONT_VECTORIZE -DEIGEN_DISABLE_UNALIGNED_ARRAY_ASSERT)
 add_definitions(-DEIGEN_DONT_VECTORIZE -DEIGEN_DISABLE_UNALIGNED_ARRAY_ASSERT)
+
+# OpenCV
+FIND_PACKAGE(OpenCV REQUIRED)
+include_directories( ${OpenCV_INCLUDE_DIRS} )
 
 # Executable output directory
 SET(RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/build/bin${OUTPUT_DIRECTORY_POSTFIX} CACHE PATH "Executable output directory")
@@ -180,3 +186,23 @@ if(BUILD_TUTORIAL_DEMO AND BUILD_TUTORIAL_DEMO_GRABBER)
         INSTALL(FILES ${DEMO_FILES} DESTINATION bin)
 
 endif(BUILD_TUTORIAL_DEMO AND BUILD_TUTORIAL_DEMO_GRABBER)
+
+###############################################################################
+#
+# TUTORIAL DEMO openCV
+#
+###############################################################################
+
+if(BUILD_TUTORIAL_DEMO AND BUILD_TUTORIAL_DEMO_OPENCV)
+
+        SET(DEMO_FILES
+                ${PROJECT_ROOT}/resources/configGlobal.xml
+        )
+        #SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-rpath ./")
+        SET(DEMO_SOURCES ./demo_cv.cpp)
+        ADD_EXECUTABLE(demoOpenCV ${DEMO_SOURCES})
+        TARGET_LINK_LIBRARIES(demoOpenCV tinyxml2 ${OpenCV_LIBS})
+        INSTALL(TARGETS demoOpenCV RUNTIME DESTINATION bin)
+        INSTALL(FILES ${DEMO_FILES} DESTINATION bin)
+
+endif(BUILD_TUTORIAL_DEMO AND BUILD_TUTORIAL_DEMO_OPENCV)
