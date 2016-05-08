@@ -8,6 +8,7 @@
 #define _GRABBER_H_
 
 #include "../Defs/defs.h"
+#include "Utilities/observer.h"
 #include <iostream>
 #include <string>
 #include <vector>
@@ -15,7 +16,7 @@
 
 namespace tutorial {
 	/// Grabber interface
-	class Grabber {
+    class Grabber : public Subject {
         public:
 
             /// Grabber type

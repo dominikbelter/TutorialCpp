@@ -8,3 +8,8 @@
 <!--     <name>Ptgrey</name> -->
 <!--     <calibrationFile>PtgreyModel.xml</calibrationFile> -->
   </Grabber>
+
+  <Visualizer>
+  	<name>Visualizer</name>
+  	<parametersFile>visualizerConfig.xml</parametersFile>
+  </Visualizer>

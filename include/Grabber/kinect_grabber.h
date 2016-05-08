@@ -31,7 +31,7 @@ class KinectGrabber : public Grabber {
         KinectGrabber(void);
 
         /// Construction
-        KinectGrabber(std::string configFilename) : Grabber("Kinect Grabber", TYPE_PRIMESENSE){
+        KinectGrabber(std::string configFilename) : Grabber("Kinect Grabber", TYPE_PRIMESENSE), poseVis(Mat34::Identity()){
             tinyxml2::XMLDocument config;
             std::string filename = "../../resources/" + configFilename;
             config.LoadFile(filename.c_str());
@@ -64,6 +64,7 @@ class KinectGrabber : public Grabber {
         virtual int grabberClose(void);
 
     private:
+        Mat34 poseVis;
 };
 
 #endif // KINECT_GRABBER_H_INCLUDED

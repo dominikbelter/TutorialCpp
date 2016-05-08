@@ -9,7 +9,7 @@ using namespace tutorial;
 /// A single instance of Kinect grabber
 KinectGrabber::Ptr grabberKinect;
 
-KinectGrabber::KinectGrabber(void) : Grabber("Kinect Grabber", TYPE_PRIMESENSE) {
+KinectGrabber::KinectGrabber(void) : Grabber("Kinect Grabber", TYPE_PRIMESENSE), poseVis(Mat34::Identity()) {
 
 }
 
@@ -30,6 +30,8 @@ void KinectGrabber::grab(void) {
     point.x() = 1.2; point.y() = 3.4; point.z() = 5.6;
 	cloud.push_back(point);
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    //poseVis(0,3)+=0.05;
+    //notify(poseVis);
 }
 
 ///
