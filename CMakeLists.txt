@@ -55,8 +55,10 @@ LIST(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake_modules)
 # add_definitions(${PCL_DEFINITIONS})
 
 #Eigen
-#add_definitions(-Wno-deprecated -DEIGEN_DONT_VECTORIZE -DEIGEN_DISABLE_UNALIGNED_ARRAY_ASSERT)
-add_definitions(-DEIGEN_DONT_VECTORIZE -DEIGEN_DISABLE_UNALIGNED_ARRAY_ASSERT)
+#set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/3rdParty/Eigen)
+find_package(Eigen3 REQUIRED)
+include_directories(${EIGEN3_INCLUDE_DIR})
+add_definitions(-Wno-deprecated -DEIGEN_DONT_VECTORIZE -DEIGEN_DISABLE_UNALIGNED_ARRAY_ASSERT)
 
 # OpenCV
 FIND_PACKAGE(OpenCV REQUIRED)
@@ -117,7 +119,7 @@ add_library(tinyxml2 STATIC ${CMAKE_CURRENT_SOURCE_DIR}/3rdParty/tinyXML/tinyxml
 
 if(BUILD_TUTORIAL AND BUILD_TUTORIAL_DEFS)
         file(GLOB DEFS_HEADERS
-            "${CMAKE_SOURCE_DIR}/include/Defs/defs.h"
+            "${CMAKE_SOURCE_DIR}/include/Defs/*.h"
         )
         ADD_LIBRARY(TUTORIAL_DEFS STATIC ${DEFS_HEADERS})
         set_target_properties(TUTORIAL_DEFS PROPERTIES LINKER_LANGUAGE CXX)

@@ -11,7 +11,7 @@
 #include <vector>
 #include <memory>
 #include <cmath>
-#include "../../3rdParty/Eigen/Geometry"
+#include "Defs/eigen3.h"
 
 /// putslam name space
 namespace tutorial {
